@@ -1,5 +1,5 @@
 {
-  "name": "demo-custom-components",
+  "name": "ko-custom-components",
   "version": "0.0.0",
   "devDependencies": {
     "gulp": "^3.6.2",

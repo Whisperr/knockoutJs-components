@@ -12,17 +12,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">demo custom-components</a>
+      <a class="navbar-brand" href="#">Ko Custom Components</a>
     </div>
     <div class="collapse navbar-collapse">
 
       <ul class="nav navbar-nav">
         <li data-bind="css: { active: route().page === 'home-page' }">
-          <a href="#">Home</a>
+          <a href="#home">Home</a>
         </li>
 
-        <li data-bind="css: { active: route().page === 'pagination-page' }">
-          <a href="#pagination-page">Pagination</a>
+        <li data-bind="css: { active: route().page === 'about-page' }">
+          <a href="#about">About</a>
+        </li>
+
+        <li data-bind="css: { active: route().page === 'pagination' }">
+          <a href="#pagination">Pagination</a>
         </li>
       </ul>
 

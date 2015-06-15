@@ -11,12 +11,37 @@ define(["knockout", "crossroads", "hasher"], function(ko, crossroads, hasher) {
 
     return new Router({
         routes: [
-            { url: '',          params: { page: 'home-page' } },
-            { url: 'pagination-page',     params: { page: 'pagination-page' } }
+            {
+                url: '',
+                params: {
+                    page: 'home-page'
+                }
+            },
+            {
+                url: 'home',
+                params: {
+                    page: 'home-page',
+                    components: 'nav-bar'
+                }
+            },
+            {
+                url: 'about',
+                params: {
+                    page: 'about-page'
+                }
+            },
+            {
+                url: 'pagination',
+                params: {
+                    page: 'pagination-page',
+                    components: 'pagination'
+                }
+            }
         ]
     });
 
     function Router(config) {
+
         var currentRoute = this.currentRoute = ko.observable({});
 
         ko.utils.arrayForEach(config.routes, function(route) {

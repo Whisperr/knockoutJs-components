@@ -1,0 +1,15 @@
+<div class="no-results" data-bind="css: {hidden: totalPages() > 0}, text: noResults">no results</div>
+<section class="pagination" data-type="financial" data-bind="css: {hidden: totalPages()  == 0 }">
+  <button role="button" class="firstPage" data-bind="click:  goToFistPage, css: {inactive: currentPage() === 1}">1</button>
+  <button role="button" class="prevPage" data-type="prev"
+        data-bind="click: goToPrevPage, css: {inactive:  currentPage()  === 1 }">
+        <span> < </span>
+  </button>
+  <span class="currentPage" data-bind="text: currentPage()"></span>
+  <button role="button" class="nextPage" data-type="next"
+        data-bind="click: goToNextPage, css: {inactive: currentPage() === totalPages() }">
+        <span> > </span>
+  </button>
+  <button class="lastPage"
+          data-bind="click: goToLastPage, text: totalPages, css: {inactive: currentPage() === totalPages() }"></button>
+</section>

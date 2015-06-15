@@ -1,7 +1,7 @@
 define(["knockout", "text!./home.html"], function(ko, homeTemplate) {
 
   function HomeViewModel(route) {
-    this.message = ko.observable('Welcome to demo custom-components!');
+    this.message = ko.observable('Welcome to Ko Custom Components!');
   }
 
   HomeViewModel.prototype.doSomething = function() {
