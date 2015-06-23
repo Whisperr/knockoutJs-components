@@ -9,49 +9,66 @@ define(["knockout", "crossroads", "hasher"], function(ko, crossroads, hasher) {
     // Knockout that requires or even knows about this technique. It's just one of
     // many possible ways of setting up client-side routes.
 
+    function Router(config) {
+
+        var router = this;
+        this.currentRoute = ko.observable({});
+
+        var routes = [];
+
+        ko.utils.arrayForEach(config.routes, function(route) {
+            routes.push(route.params.page);
+            crossroads.addRoute(route.url, function(requestParams) {
+                router.currentRoute(ko.utils.extend(requestParams, route.params));
+            });
+        });
+
+        /**
+         * remove duplicate values from routes
+         * @type {Array.<T>}
+         */
+        routes =  routes.filter(function(item, pos, self) {
+            return self.indexOf(item) == pos;
+        });
+
+        cmp.routes = routes;
+
+        activateCrossroads();
+    }
+
     return new Router({
         routes: [
             {
                 url: '',
                 params: {
-                    page: 'home-page'
+                    page: 'home-page',
+                    components: ['nav-bar']
                 }
             },
             {
-                url: 'home',
+                url: 'home-page',
                 params: {
                     page: 'home-page',
-                    components: 'nav-bar'
+                    components: ['nav-bar']
                 }
             },
             {
-                url: 'about',
+                url: 'about-page',
                 params: {
-                    page: 'about-page'
+                    page: 'about-page',
+                    components: ['nav-bar']
                 }
             },
             {
-                url: 'pagination',
+                url: 'pagination-page',
                 params: {
                     page: 'pagination-page',
-                    components: 'pagination'
+                    components: ['pagination', 'nav-bar', 'image-grid']
                 }
             }
         ]
     });
 
-    function Router(config) {
-
-        var currentRoute = this.currentRoute = ko.observable({});
-
-        ko.utils.arrayForEach(config.routes, function(route) {
-            crossroads.addRoute(route.url, function(requestParams) {
-                currentRoute(ko.utils.extend(requestParams, route.params));
-            });
-        });
-
-        activateCrossroads();
-    }
 
     function activateCrossroads() {
         function parseHash(newHash, oldHash) { crossroads.parse(newHash); }

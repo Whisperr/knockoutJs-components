@@ -1,28 +1,41 @@
-define(['knockout', 'text!./pagination-page.html'], function (ko, template) {
+define(['jquery', 'knockout', 'text!./pagination-page.html'], function ($, ko, template) {
 
-    function PaginationPage(params) {
-        this.message = ko.observable('Hello from the pagination component!');
-        this.totalPages = ko.observable(10);
+    cmp.PaginationPage = function PaginationPage(params) {
+        console.log('pagination page');
+        var model = this;
+
+        cmp.BasePage.call(this, params);
+
+        /**
+         * data needed for pagination
+         */
+        this.itemsPerPage = 10; //default value 10 items/page
+        this.totalPages = ko.observable(1); //default value of total pages
         this.currentPage = ko.observable(1);
-        this.route = params.route;
+        this.currentPage.subscribe(function(val){
+            model.visibleGroup(model.images[val-1]);
+            console.dir(model.visibleGroup());
+        });
+        this.visibleGroup = ko.observableArray();
+        this.images = [];
+        $.getJSON('http://api.flickr.com/services/feeds/photos_public.gne?format=json&tags=technology,data,web&jsoncallback=?', function(data) {
+            var allItems = data.items,
+                itemCount = allItems.length,
+                totalpages = itemCount/model.itemsPerPage;
 
-        function loadCss(url) {
-            var link = document.createElement("link");
-            link.type = "text/css";
-            link.rel = "stylesheet";
-            link.href = url;
-            document.getElementsByTagName("head")[0].appendChild(link);
-        }
+            model.totalPages(totalpages);
 
-        loadCss('/components/src/components/pagination/pagination.css');
-    }
+            while(allItems.length) {
+                model.images.push(allItems.splice(0, model.itemsPerPage));
+            }
+            model.visibleGroup(model.images[0]);
+        });
+    };
 
-    // This runs when the component is torn down. Put here any logic necessary to clean up,
-    // for example cancelling setTimeouts or disposing Knockout subscriptions/computeds.
-    PaginationPage.prototype.dispose = function () {};
+    cmp.PaginationPage.prototype = Object.create(cmp.BasePage.prototype);
 
     return {
-        viewModel: PaginationPage,
+        viewModel: cmp.PaginationPage,
         template: template
     };
 

@@ -1,7 +1,7 @@
 define(['knockout', 'text!./pagination.html', 'text!./pagination.css'], function (ko, template) {
 
     function Pagination (params) {
-        this.data = params.value;
+        this.data = params.data;
 
         this.currentPage = this.data.currentPage;
         this.totalPages = this.data.totalPages;

@@ -1,13 +1,17 @@
-define(["knockout", "text!./home.html"], function(ko, homeTemplate) {
+define(['knockout', 'text!./home-page.html'], function (ko, template) {
 
-  function HomeViewModel(route) {
-    this.message = ko.observable('Welcome to Ko Custom Components!');
-  }
+    cmp.HomePage = function HomePage(params) {
+        console.log(' _ home page _ ');
+        console.dir(params);
+        cmp.BasePage.call(this, params);
+    }
 
-  HomeViewModel.prototype.doSomething = function() {
-    this.message('You invoked doSomething() on the viewmodel.');
-  };
+    cmp.HomePage.prototype = Object.create(cmp.BasePage.prototype);
 
-  return { viewModel: HomeViewModel, template: homeTemplate };
+
+    return {
+        viewModel: cmp.HomePage,
+        template: template
+    };
 
 });
